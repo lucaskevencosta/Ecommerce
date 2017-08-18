@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>E-commerce.:</title>
+	<h:outputStylesheet library="css" name="stylePublic.css" />
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+</h:head>
+
+<h:body>
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north" styleClass="menu">
+
+			<div align="left" class="logo">
+				<p:graphicImage library="img" name="logo.png" />
+			</div>
+
+			<div align="center" class="input-pesquisar">
+				<p:inputText styleClass="form-control" placeholder="Pesquisar..." />
+			</div>
+
+			<div align="right" class="form_login">
+				<p:commandLink value="login" oncomplete="PF('loginDialog').show()" />
+			</div>
+
+		</p:layoutUnit>
+
+		<p:layoutUnit position="west">
+			<ui:insert name="coluna" />
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center">
+        	Conteúdo
+    	</p:layoutUnit>
+
+		<p:layoutUnit position="south" styleClass="rodape">
+			<ui:insert name="rodape" />
+		</p:layoutUnit>
+	</p:layout>
+
+	<p:dialog widgetVar="loginDialog" resizable="false" modal="true">
+
+		<h:panelGroup>
+			Erro ao efetuar login<br />
+			Motivo: #{SPRING_SECURITY_LAST_EXCEPTION.message}
+		</h:panelGroup>
+
+		<form id="login" method="post"
+			action="#{request.contextPath}/j_spring_security_check">
+			<table>
+				<tr>
+					<td>Usuário</td>
+					<td><input type="text" name="j_username" class="form-control" /></td>
+				</tr>
+				<tr>
+					<td>Senha</td>
+					<td><input type="password" name="j_password"
+						class="form-control" /></td>
+				</tr>
+				<tr>
+					<td align="right"><input type="checkbox"
+						name="_spring_security_remember_me" /></td>
+					<td>Lembrar-me</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td><input type="submit" value="Entrar"
+						class="btn btn-primary" /></td>
+				</tr>
+				<tr>
+					<td><p:commandLink value="Não é cadastrado?" /></td>
+				</tr>
+			</table>
+			<script>
+				document.getElementById("login").j_username.value = "#{SPRING_SECURITY_LAST_USERNAME}";
+			</script>
+		</form>
+
+	</p:dialog>
+
+</h:body>
+
+</html>

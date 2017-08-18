@@ -1,0 +1,34 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.ui-layout-north {
+	z-index: 20 !important;
+	overflow: visible !important;;
+}
+
+.ui-layout-north .ui-layout-unit-content {
+	overflow: visible !important;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 96% !important;
+}
+
+.rodape {
+	text-align: center;
+}
+
+.logo {
+	margin-left: 90px;
+}
+
+.form_login {
+	margin-right: 90px;
+}
+
+.input-pesquisar {
+	margin-left: 300px;
+	margin-right: 300px;
+}

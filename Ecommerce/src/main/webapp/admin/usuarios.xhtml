@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/admin/template/template.xhtml">
+
+	<ui:define name="conteudo">
+		<h:form id="formTable">
+			<br />
+
+			<p:panel header="Listagem de Usuários" style="text-align: center;">
+
+				<div align="left">
+					<p:commandButton value="Novo"
+						oncomplete="PF('CadUsuarioDialog').show();"
+						actionListener="#{pessoaCtrl.actionNovo}"
+						update=":msgs :formCadUsuario" />
+				</div>
+
+				<br />
+
+				<p:dataTable var="user" value="#{pessoaCtrl.listagem}"
+					emptyMessage="Não há dados cadastrados" paginator="true" rows="10"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,15,20" paginatorPosition="bottom"
+					id="tabelaUsuarios" style="text-align: left;">
+
+					<p:column headerText="Nome" filterBy="#{user.nome}">
+						<p:outputLabel value="#{user.nome}" />
+					</p:column>
+
+					<p:column headerText="CPF">
+						<p:outputLabel value="#{user.cpf}" />
+					</p:column>
+
+					<p:column headerText="Tipo">
+						<p:outputLabel value="#{user.tipo}" />
+					</p:column>
+
+					<p:column headerText="Opções"
+						style="width: 120px;text-align: center;">
+
+						<p:commandButton
+							actionListener="#{pessoaCtrl.actionPrepararEdicao}"
+							icon="fa fa-edit" update=":formCadUsuario:painelCadUsuario"
+							oncomplete="PF('CadUsuarioDialog').show();">
+							<f:attribute name="usuarioTabela" value="#{user}" />
+						</p:commandButton>
+
+						<p:commandButton actionListener="#{pessoaCtrl.actionExcluir}"
+							icon="fa fa-trash-o" update="tabelaUsuarios">
+							<p:confirm header="Confirmação"
+								message="Deseja mesmo excluir este registro?"
+								icon="ui-icon-alert" />
+							<f:attribute name="usuarioTabela" value="#{user}" />
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+
+			</p:panel>
+		</h:form>
+
+		<p:dialog widgetVar="CadUsuarioDialog" id="CadUsuarioDialog"
+			closable="false" draggable="false" modal="true" resizable="false">
+			<h:form id="formCadUsuario">
+
+				<h:panelGrid columns="2" id="painelCadUsuario">
+					<p:outputLabel value="Nome: " />
+					<p:inputText value="#{pessoaCtrl.pessoa.nome}" required="true"
+						maxlength="40" />
+
+					<p:outputLabel value="CPF: " />
+					<p:inputMask mask="999.999.999-99" value="#{pessoaCtrl.pessoa.cpf}"
+						required="true" />
+
+					<p:outputLabel value="RG: " />
+					<p:inputText value="#{pessoaCtrl.pessoa.rg}" required="true"
+						maxlength="25" />
+
+					<p:outputLabel value="Data de Nascimento: " />
+					<p:calendar value="#{pessoaCtrl.pessoa.dataNasc}"
+						pattern="dd/MM/yyyy" mask="true" navigator="true"
+						maxdate="01/01/2000" style="width: 50% !important" />
+
+					<p:outputLabel value="Rua: " />
+					<p:inputText value="#{pessoaCtrl.pessoa.rua}" required="true"
+						maxlength="40" />
+
+					<p:outputLabel value="Bairro: " />
+					<p:inputText value="#{pessoaCtrl.pessoa.bairro}" required="true"
+						maxlength="40" />
+
+					<p:outputLabel value="Numero: " />
+					<p:inputNumber value="#{pessoaCtrl.pessoa.numero}" required="true"
+						decimalPlaces="0" />
+
+					<p:outputLabel value="Complemento: " />
+					<p:inputText value="#{pessoaCtrl.pessoa.complemento}"
+						required="true" maxlength="60" />
+
+					<p:outputLabel value="CEP: " />
+					<p:inputMask value="#{pessoaCtrl.pessoa.cep}" mask="99.999-999"
+						required="true" />
+
+					<p:outputLabel value="Estado: " />
+					<p:selectOneMenu value="#{pessoaCtrl.estado}" filter="true"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+						<f:selectItems value="#{pessoaCtrl.estados}" var="estado"
+							itemValue="#{estado}" itemLabel="#{estado.nome}" />
+						<p:ajax listener="#{pessoaCtrl.actionPopularCidades}"
+							update=":formCadUsuario:cidade" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Cidade: " />
+					<p:selectOneMenu value="#{pessoaCtrl.pessoa.cidade}" filter="true"
+						converter="omnifaces.SelectItemsConverter" id="cidade">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+						<f:selectItems value="#{pessoaCtrl.cidades}" var="cidade"
+							itemValue="#{cidade}" itemLabel="#{cidade.nome}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="E-mail: " />
+					<p:inputText value="#{pessoaCtrl.pessoa.email}" required="true"
+						maxlength="50" />
+
+					<p:outputLabel value="Senha: " />
+					<p:password value="#{pessoaCtrl.pessoa.senha}" feedback="true"
+						maxlength="30" />
+
+					<p:outputLabel value="Tipo: " />
+					<p:selectOneMenu value="#{pessoaCtrl.pessoa.tipo}" filter="true">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+						<f:selectItem itemLabel="Administrador" itemValue="ROLE_ADMIN" />
+						<f:selectItem itemLabel="Cliente" itemValue="ROLE_CLIENTE" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Ativo: " />
+					<p:selectBooleanButton value="#{pessoaCtrl.pessoa.ativo}"
+						onLabel="Ativo" offLabel="Inativo" onIcon="ui-icon-check"
+						offIcon="ui-icon-close" style="width:80px" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('CadUsuarioDialog').hide();" />
+					<p:commandButton value="Salvar"
+						actionListener="#{pessoaCtrl.actionSalvar}"
+						update=":formTable:tabelaUsuarios"
+						oncomplete="PF('CadUsuarioDialog').hide();" />
+				</h:panelGrid>
+
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>

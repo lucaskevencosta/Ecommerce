@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Painel do Administrador.:</title>
+	<h:outputStylesheet library="css" name="styleAdmin.css" />
+</h:head>
+
+<body>
+
+	<p:growl id="msgs" />
+
+	<div id="geral" style="font-size: 10.5pt;">
+		<div id="menu">
+			<h:form id="formMenu">
+				<p:menubar>
+					<p:menuitem value="Início" url="/admin/painel_do_admin.xhtml" />
+
+					<p:submenu label="Cadastros">
+						<p:menuitem value="Usuários" url="/admin/usuarios.xhtml" />
+					</p:submenu>
+
+					<f:facet name="options">
+						<p:commandButton type="button" value="Logout"
+							icon="ui-icon-extlink"
+							onclick="document.location='#{request.contextPath}/j_spring_security_logout'" />
+					</f:facet>
+				</p:menubar>
+			</h:form>
+		</div>
+
+		<div id="conteudo">
+			<ui:insert name="conteudo" />
+		</div>
+
+		<div id="rodape" style="text-align: center;">
+			<p:separator />
+			<p:outputLabel
+				value="&copy; 2017 - Desenvolvido por: Lucas Keven C. de Souza" />
+		</div>
+	</div>
+</body>
+</html>
