@@ -44,7 +44,8 @@
 
 						<p:commandButton
 							actionListener="#{pessoaCtrl.actionPrepararEdicao}"
-							icon="fa fa-edit" update=":formCadUsuario:painelCadUsuario"
+							icon="fa fa-edit"
+							update=":formCadUsuario:painelCadUsuario :msgs"
 							oncomplete="PF('CadUsuarioDialog').show();">
 							<f:attribute name="usuarioTabela" value="#{user}" />
 						</p:commandButton>
@@ -113,8 +114,8 @@
 						required="true" />
 
 					<p:outputLabel value="Estado: " />
-					<p:selectOneMenu value="#{pessoaCtrl.estado}" filter="true"
-						converter="omnifaces.SelectItemsConverter">
+					<p:selectOneMenu id="estado" value="#{pessoaCtrl.estado}"
+						filter="true" converter="omnifaces.SelectItemsConverter">
 						<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
 						<f:selectItems value="#{pessoaCtrl.estados}" var="estado"
 							itemValue="#{estado}" itemLabel="#{estado.nome}" />

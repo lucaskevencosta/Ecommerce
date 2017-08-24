@@ -43,7 +43,10 @@
         <!-- Mapeamento das entidades -->
         <mapping class="br.com.ecommerce.entidade.Cidade" />
         <mapping class="br.com.ecommerce.entidade.Estado" />
+        <mapping class="br.com.ecommerce.entidade.Fabricante" />
+        <mapping class="br.com.ecommerce.entidade.ImagensProdutos" />
         <mapping class="br.com.ecommerce.entidade.Pessoa" />
+        <mapping class="br.com.ecommerce.entidade.Produto" />
 
     </session-factory>
 

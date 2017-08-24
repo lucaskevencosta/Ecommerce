@@ -105,9 +105,8 @@ public class PessoaCtrl implements Serializable {
 			pessoa = (Pessoa) event.getComponent().getAttributes().get("usuarioTabela");
 			
 			estado = pessoa.getCidade().getEstado();
-			estados = new EstadoDAO().selectAll();
 			
-			System.out.println(estado.getNome());
+			estados = new EstadoDAO().selectAll();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			Messages.addGlobalError("Erro ao carregar dados.");
