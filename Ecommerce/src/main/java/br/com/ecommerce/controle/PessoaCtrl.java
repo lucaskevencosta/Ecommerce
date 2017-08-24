@@ -62,7 +62,13 @@ public class PessoaCtrl implements Serializable {
 	}
 	
 	public List<Pessoa> getListagem() {
-		return new PessoaDAO().selectAll();
+		try {
+			return new PessoaDAO().selectAll();	
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			Messages.addGlobalError("Ocorreu um erro ao tentar carregar os dados");
+			return null;
+		}
 	}
 	
 	public void actionNovo() {

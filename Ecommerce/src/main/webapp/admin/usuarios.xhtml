@@ -51,9 +51,9 @@
 						</p:commandButton>
 
 						<p:commandButton actionListener="#{pessoaCtrl.actionExcluir}"
-							icon="fa fa-trash-o" update="tabelaUsuarios">
+							icon="fa fa-trash-o" update="tabelaUsuarios :msgs">
 							<p:confirm header="Confirmação"
-								message="Deseja mesmo excluir este registro?"
+								message="Este registro será excluído permanentemente. Deseja Continuar?"
 								icon="ui-icon-alert" />
 							<f:attribute name="usuarioTabela" value="#{user}" />
 						</p:commandButton>
@@ -157,7 +157,7 @@
 						oncomplete="PF('CadUsuarioDialog').hide();" />
 					<p:commandButton value="Salvar"
 						actionListener="#{pessoaCtrl.actionSalvar}"
-						update=":formTable:tabelaUsuarios"
+						update=":formTable:tabelaUsuarios :msgs"
 						oncomplete="PF('CadUsuarioDialog').hide();" />
 				</h:panelGrid>
 

@@ -16,7 +16,9 @@
 
 				<div align="left">
 					<p:commandButton value="Novo"
-						oncomplete="PF('cadFabricanteDialog').show();" />
+						actionListener="#{fabricanteCtrl.actionNovo}"
+						oncomplete="PF('cadFabricanteDialog').show();"
+						update=":formDialogCadFabricante :msgs" />
 				</div>
 
 				<br />
@@ -38,12 +40,31 @@
 
 					<p:column headerText="Opções"
 						style="width: 120px;text-align: center;">
-						<p:commandButton icon="fa fa-edit" />
+						<p:commandButton
+							actionListener="#{fabricanteCtrl.actionPrepararEdicao}"
+							icon="fa fa-edit" oncomplete="PF('cadFabricanteDialog').show();"
+							update=":formDialogCadFabricante :msgs" >
+							<f:attribute name="fabricante" value="#{fabricante}" />
+						</p:commandButton>
 
-						<p:commandButton icon="fa fa-trash-o" />
+						<p:commandButton icon="fa fa-trash-o"
+							actionListener="#{fabricanteCtrl.actionExcluir}"
+							update="tabelaFabricantes :msgs">
+							<p:confirm header="Confirmação"
+								message="Este registro será excluído permanentemente. Deseja Continuar?"
+								icon="ui-icon-alert" />
+							<f:attribute name="fabricante" value="#{fabricante}" />
+						</p:commandButton>
 					</p:column>
 
 				</p:dataTable>
+
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
 
 			</p:panel>
 
@@ -51,21 +72,26 @@
 
 		<p:dialog widgetVar="cadFabricanteDialog" id="cadFabricanteDialog"
 			draggable="false" closable="false" modal="true" resizable="false">
+			<h:form id="formDialogCadFabricante">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome: " />
+					<p:inputText value="#{fabricanteCtrl.fabricante.nome}"
+						maxlength="30" />
 
-			<h:panelGrid columns="2">
-				<p:outputLabel value="Nome: " />
-				<p:inputText value="" maxlength="30" />
-				
-				<p:outputLabel value="Observações: " />
-				<p:inputTextarea rows="6" cols="33" />
-			</h:panelGrid>
+					<p:outputLabel value="Observações: " />
+					<p:inputTextarea value="#{fabricanteCtrl.fabricante.observacoes}"
+						rows="6" cols="33" />
+				</h:panelGrid>
 
-			<h:panelGrid columns="2">
-				<p:commandButton value="Cancelar"
-					oncomplete="PF('cadFabricanteDialog').hide();" />
-				<p:commandButton value="Salvar" />
-			</h:panelGrid>
-
+				<h:panelGrid columns="2">
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('cadFabricanteDialog').hide();" />
+					<p:commandButton value="Salvar"
+						actionListener="#{fabricanteCtrl.actionSalvar}"
+						oncomplete="PF('cadFabricanteDialog').hide();"
+						update=":formTable :msgs" />
+				</h:panelGrid>
+			</h:form>
 		</p:dialog>
 	</ui:define>
 
