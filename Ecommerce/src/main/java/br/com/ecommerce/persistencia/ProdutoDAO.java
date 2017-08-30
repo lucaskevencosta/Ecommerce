@@ -1,5 +1,7 @@
 package br.com.ecommerce.persistencia;
 
-public class ProdutoDAO {
+import br.com.ecommerce.entidade.Produto;
+
+public class ProdutoDAO extends GenericoDAO<Produto> {
 
 }

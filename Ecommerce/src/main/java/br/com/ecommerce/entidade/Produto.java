@@ -1,16 +1,11 @@
 package br.com.ecommerce.entidade;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
@@ -30,9 +25,6 @@ public class Produto extends EntidadeGenerica {
 	@ManyToOne
 	@JoinColumn (nullable = false)
 	private Fabricante fabricante;
-	
-	@OneToMany (mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<ImagensProdutos> imagens = new ArrayList<ImagensProdutos>();
 
 	public String getNome() {
 		return nome;
@@ -64,14 +56,6 @@ public class Produto extends EntidadeGenerica {
 
 	public void setFabricante(Fabricante fabricante) {
 		this.fabricante = fabricante;
-	}
-	
-	public List<ImagensProdutos> getProdutos() {
-		return imagens;
-	}
-	
-	public void setProdutos(List<ImagensProdutos> imagens) {
-		this.imagens = imagens;
 	}
 	
 }

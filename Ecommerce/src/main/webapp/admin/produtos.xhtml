@@ -9,18 +9,134 @@
 	template="/admin/template/template.xhtml">
 
 	<ui:define name="conteudo">
-
 		<br />
-		<h:form id="formTable">
 
-			<p:panel header="Listagem de Produtos">
+		<h:form id="formaProdutoListagem">
+			<p:panel header="Listagem de Produtos" style="text-align: center;">
 
-				<p:commandButton value="Novo" />
+				<div align="left">
+					<p:commandButton value="Novo"
+						actionListener="#{produtoCtrl.actionNovo}"
+						oncomplete="PF('cadProdDialog').show();"
+						update=":msgs :formCadProduto:cadProduto" />
+				</div>
+
 				<br />
-				
-			</p:panel>
 
+				<p:dataTable id="tabelaProdutos" var="produto"
+					value="#{produtoCtrl.listagem}"
+					emptyMessage="Não há dados cadastrados" paginator="true"
+					paginatorPosition="bottom" rows="10" rowsPerPageTemplate="10,15,20"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					style="text-align: left;">
+
+					<p:column headerText="Nome">
+						<p:outputLabel value="#{produto.nome}" />
+					</p:column>
+
+					<p:column headerText="Descrição">
+						<p:outputLabel value="#{produto.descricao}" />
+					</p:column>
+
+					<p:column headerText="Preço" style="width: 120px;">
+						<p:outputLabel value="R$ #{produto.preco}" />
+					</p:column>
+
+					<p:column headerText="Fabricante">
+						<p:outputLabel value="#{produto.fabricante.nome}" />
+					</p:column>
+
+					<p:column headerText="Imagens"
+						style="width: 80px;text-align: center;">
+
+						<p:commandButton icon="fa fa-image" />
+
+					</p:column>
+
+					<p:column headerText="Opções"
+						style="width: 120px;text-align: center;">
+
+						<p:commandButton icon="fa fa-edit"
+							actionListener="#{produtoCtrl.actionPreparaEdição}"
+							oncomplete="PF('cadProdDialog').show();"
+							update=":msgs :formCadProduto:cadProduto">
+
+							<f:attribute value="#{produto}" name="produtoSelecionado" />
+
+						</p:commandButton>
+
+						<p:commandButton icon="fa fa-trash-o"
+							actionListener="#{produtoCtrl.actionExcluir}"
+							update=":msgs :formaProdutoListagem:tabelaProdutos">
+							
+							<p:confirm header="Confirmação"
+								message="Este registro será excluído permanentemente. Deseja Continuar?"
+								icon="ui-icon-alert" />
+
+							<f:attribute value="#{produto}" name="produtoSelecionado" />
+
+						</p:commandButton>
+
+					</p:column>
+
+				</p:dataTable>
+
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+
+			</p:panel>
 		</h:form>
+
+		<p:dialog widgetVar="cadProdDialog" id="cadProdDialog" modal="true"
+			resizable="false" draggable="false" closable="false">
+
+			<h:form id="formCadProduto">
+				<h:panelGrid columns="2" id="cadProduto">
+					<p:outputLabel for="nome" value="Nome: " />
+					<p:inputText id="nome" value="#{produtoCtrl.produto.nome}"
+						maxlength="30" placeholder="Nome" />
+
+					<p:outputLabel for="descricao" value="Descrição: " />
+					<p:inputText id="descricao"
+						value="#{produtoCtrl.produto.descricao}" maxlength="50"
+						placeholder="Descrição" />
+
+					<p:outputLabel for="preco" value="Preço: " />
+					<p:inputNumber id="preco" value="#{produtoCtrl.produto.preco}"
+						symbol="R$" decimalSeparator="," thousandSeparator="."
+						placeholder="Preço" />
+
+					<p:outputLabel for="fabricante" value="Fabricante: " />
+					<p:selectOneMenu id="fabricante"
+						value="#{produtoCtrl.produto.fabricante}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem noSelectionOption="true" itemLabel="Selecionar" />
+						<f:selectItems var="fabricante" value="#{produtoCtrl.fabricantes}"
+							itemLabel="#{fabricante.nome}" itemValue="#{fabricante}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+
+				<br />
+				<br />
+
+				<div align="right">
+					<h:panelGrid columns="2">
+						<p:commandButton value="Cancelar"
+							oncomplete="PF('cadProdDialog').hide();" />
+						<p:commandButton value="Salvar"
+							actionListener="#{produtoCtrl.actionSalvar}"
+							oncomplete="PF('cadProdDialog').hide();"
+							update=":msgs :formaProdutoListagem:tabelaProdutos" />
+					</h:panelGrid>
+				</div>
+			</h:form>
+
+		</p:dialog>
+
 	</ui:define>
 
 </ui:composition>

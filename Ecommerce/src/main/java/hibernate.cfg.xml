@@ -25,7 +25,7 @@
         <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
 
         <!-- Cria as tabelas do banco de dados -->
-        <property name="hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">validate</property>
         
         <!-- Configurações de debug -->
 		<property name="show_sql">true</property>
@@ -44,7 +44,6 @@
         <mapping class="br.com.ecommerce.entidade.Cidade" />
         <mapping class="br.com.ecommerce.entidade.Estado" />
         <mapping class="br.com.ecommerce.entidade.Fabricante" />
-        <mapping class="br.com.ecommerce.entidade.ImagensProdutos" />
         <mapping class="br.com.ecommerce.entidade.Pessoa" />
         <mapping class="br.com.ecommerce.entidade.Produto" />
 

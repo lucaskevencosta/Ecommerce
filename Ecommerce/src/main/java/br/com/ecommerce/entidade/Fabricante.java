@@ -12,7 +12,7 @@ public class Fabricante extends EntidadeGenerica {
 	@Column (nullable = false, length = 30)
 	private String nome;
 	
-	@Column (length = 60)
+	@Column (length = 120)
 	private String observacoes;
 
 	public String getNome() {

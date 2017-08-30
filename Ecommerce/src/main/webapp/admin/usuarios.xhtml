@@ -23,7 +23,7 @@
 
 				<p:dataTable var="user" value="#{pessoaCtrl.listagem}"
 					emptyMessage="Não há dados cadastrados" paginator="true" rows="10"
-					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="10,15,20" paginatorPosition="bottom"
 					id="tabelaUsuarios" style="text-align: left;">
 
@@ -44,8 +44,7 @@
 
 						<p:commandButton
 							actionListener="#{pessoaCtrl.actionPrepararEdicao}"
-							icon="fa fa-edit"
-							update=":formCadUsuario:painelCadUsuario :msgs"
+							icon="fa fa-edit" update=":formCadUsuario:painelCadUsuario :msgs"
 							oncomplete="PF('CadUsuarioDialog').show();">
 							<f:attribute name="usuarioTabela" value="#{user}" />
 						</p:commandButton>
@@ -113,7 +112,7 @@
 					<p:inputMask value="#{pessoaCtrl.pessoa.cep}" mask="99.999-999"
 						required="true" />
 
-					<p:outputLabel value="Estado: " />
+					<p:outputLabel for="estado" value="Estado: " />
 					<p:selectOneMenu id="estado" value="#{pessoaCtrl.estado}"
 						filter="true" converter="omnifaces.SelectItemsConverter">
 						<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
@@ -123,7 +122,7 @@
 							update=":formCadUsuario:cidade" />
 					</p:selectOneMenu>
 
-					<p:outputLabel value="Cidade: " />
+					<p:outputLabel for="cidade" value="Cidade: " />
 					<p:selectOneMenu value="#{pessoaCtrl.pessoa.cidade}" filter="true"
 						converter="omnifaces.SelectItemsConverter" id="cidade">
 						<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
@@ -131,9 +130,9 @@
 							itemValue="#{cidade}" itemLabel="#{cidade.nome}" />
 					</p:selectOneMenu>
 
-					<p:outputLabel value="E-mail: " />
-					<p:inputText value="#{pessoaCtrl.pessoa.email}" required="true"
-						maxlength="50" />
+					<p:outputLabel for="email" value="E-mail: " />
+					<p:inputText id="email" value="#{pessoaCtrl.pessoa.email}"
+						required="true" maxlength="50" />
 
 					<p:outputLabel value="Senha: " />
 					<p:password value="#{pessoaCtrl.pessoa.senha}" feedback="true"
@@ -152,14 +151,18 @@
 						offIcon="ui-icon-close" style="width:80px" />
 				</h:panelGrid>
 
-				<h:panelGrid columns="2">
-					<p:commandButton value="Cancelar"
-						oncomplete="PF('CadUsuarioDialog').hide();" />
-					<p:commandButton value="Salvar"
-						actionListener="#{pessoaCtrl.actionSalvar}"
-						update=":formTable:tabelaUsuarios :msgs"
-						oncomplete="PF('CadUsuarioDialog').hide();" />
-				</h:panelGrid>
+				<br /><br />
+
+				<div align="right">
+					<h:panelGrid columns="2">
+						<p:commandButton value="Cancelar"
+							oncomplete="PF('CadUsuarioDialog').hide();" />
+						<p:commandButton value="Salvar"
+							actionListener="#{pessoaCtrl.actionSalvar}"
+							update=":formTable:tabelaUsuarios :msgs"
+							oncomplete="PF('CadUsuarioDialog').hide();" />
+					</h:panelGrid>
+				</div>
 
 			</h:form>
 		</p:dialog>

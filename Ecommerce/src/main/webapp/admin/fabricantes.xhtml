@@ -26,7 +26,7 @@
 				<p:dataTable var="fabricante" value="#{fabricanteCtrl.listagem}"
 					id="tabelaFabricantes" paginator="true" rows="10"
 					emptyMessage="Não hã dados cadastrados"
-					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="10,15,20" paginatorPosition="bottom"
 					style="text-align: left;">
 
@@ -43,7 +43,7 @@
 						<p:commandButton
 							actionListener="#{fabricanteCtrl.actionPrepararEdicao}"
 							icon="fa fa-edit" oncomplete="PF('cadFabricanteDialog').show();"
-							update=":formDialogCadFabricante :msgs" >
+							update=":formDialogCadFabricante :msgs">
 							<f:attribute name="fabricante" value="#{fabricante}" />
 						</p:commandButton>
 
@@ -80,17 +80,22 @@
 
 					<p:outputLabel value="Observações: " />
 					<p:inputTextarea value="#{fabricanteCtrl.fabricante.observacoes}"
-						rows="6" cols="33" />
+						rows="6" cols="33" maxlength="120" />
 				</h:panelGrid>
 
-				<h:panelGrid columns="2">
-					<p:commandButton value="Cancelar"
-						oncomplete="PF('cadFabricanteDialog').hide();" />
-					<p:commandButton value="Salvar"
-						actionListener="#{fabricanteCtrl.actionSalvar}"
-						oncomplete="PF('cadFabricanteDialog').hide();"
-						update=":formTable :msgs" />
-				</h:panelGrid>
+				<br />
+				<br />
+
+				<div align="right">
+					<h:panelGrid columns="2">
+						<p:commandButton value="Cancelar"
+							oncomplete="PF('cadFabricanteDialog').hide();" />
+						<p:commandButton value="Salvar"
+							actionListener="#{fabricanteCtrl.actionSalvar}"
+							oncomplete="PF('cadFabricanteDialog').hide();"
+							update=":formTable :msgs" />
+					</h:panelGrid>
+				</div>
 			</h:form>
 		</p:dialog>
 	</ui:define>
