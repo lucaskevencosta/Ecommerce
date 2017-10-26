@@ -21,11 +21,11 @@ import br.com.ecommerce.persistencia.PessoaDAO;
 @ViewScoped
 @ManagedBean(name = "pessoaCtrl")
 public class PessoaCtrl implements Serializable {
-		
+
 	private Pessoa pessoa;
-	
+
 	private List<Cidade> cidades;
-	
+
 	private Estado estado;
 	private List<Estado> estados;
 
@@ -52,30 +52,30 @@ public class PessoaCtrl implements Serializable {
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
-	
+
 	public Estado getEstado() {
 		return estado;
 	}
-	
+
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
-	
+
 	public List<Pessoa> getListagem() {
 		try {
-			return new PessoaDAO().selectAll();	
+			return new PessoaDAO().selectAll();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			Messages.addGlobalError("Ocorreu um erro ao tentar carregar os dados");
 			return null;
 		}
 	}
-	
+
 	public void actionNovo() {
 		pessoa = new Pessoa();
 		estado = new Estado();
 		cidades = new ArrayList<Cidade>();
-		
+
 		try {
 			estados = new EstadoDAO().selectAll();
 		} catch (RuntimeException e) {
@@ -83,7 +83,7 @@ public class PessoaCtrl implements Serializable {
 			Messages.addGlobalError("Erro ao carregar dados.");
 		}
 	}
-	
+
 	public void actionSalvar() {
 		try {
 			new PessoaDAO().merge(pessoa);
@@ -93,34 +93,34 @@ public class PessoaCtrl implements Serializable {
 			Messages.addGlobalError("Erro ao tentar salvar os dados");
 		}
 	}
-	
+
 	public void actionExcluir(ActionEvent event) {
 		try {
 			pessoa = (Pessoa) event.getComponent().getAttributes().get("usuarioTabela");
 			new PessoaDAO().delete(pessoa);
-			
+
 			Messages.addGlobalInfo("Usuário excluído com sucesso.");
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			Messages.addGlobalError("Erro ao realizar a operação.");
 		}
 	}
-	
-	public void actionPrepararEdicao(ActionEvent event) {		
+
+	public void actionPrepararEdicao(ActionEvent event) {
 		try {
 			pessoa = (Pessoa) event.getComponent().getAttributes().get("usuarioTabela");
-			
+
 			estado = pessoa.getCidade().getEstado();
-			
+
 			estados = new EstadoDAO().selectAll();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			Messages.addGlobalError("Erro ao carregar dados.");
 		}
 	}
-	
+
 	public void actionPopularCidades() {
-		if(estado != null) {
+		if (estado != null) {
 			try {
 				cidades = new CidadeDAO().selectInnerJoinEstado(estado.getId());
 			} catch (RuntimeException e) {
@@ -129,5 +129,5 @@ public class PessoaCtrl implements Serializable {
 			}
 		}
 	}
-	
+
 }

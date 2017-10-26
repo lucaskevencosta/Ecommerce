@@ -32,7 +32,6 @@
 		<param-value>native</param-value>
 	</context-param>
 
-
 	<!-- Spring Security -->
 	<resource-ref>
 		<description>DataSource hibernatedb</description>

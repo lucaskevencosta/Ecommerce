@@ -49,7 +49,13 @@
 					<p:column headerText="Imagens"
 						style="width: 80px;text-align: center;">
 
-						<p:commandButton icon="fa fa-image" />
+						<p:commandButton icon="fa fa-image"
+							action="#{produtoCtrl.actionImagens}">
+
+							<f:setPropertyActionListener value="#{produto}"
+								target="#{produtoCtrl.produto}" />
+
+						</p:commandButton>
 
 					</p:column>
 
@@ -68,7 +74,7 @@
 						<p:commandButton icon="fa fa-trash-o"
 							actionListener="#{produtoCtrl.actionExcluir}"
 							update=":msgs :formaProdutoListagem:tabelaProdutos">
-							
+
 							<p:confirm header="Confirmação"
 								message="Este registro será excluído permanentemente. Deseja Continuar?"
 								icon="ui-icon-alert" />

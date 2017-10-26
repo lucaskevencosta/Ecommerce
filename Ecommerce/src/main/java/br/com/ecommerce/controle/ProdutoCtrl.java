@@ -12,6 +12,7 @@ import br.com.ecommerce.entidade.Fabricante;
 import br.com.ecommerce.entidade.Produto;
 import br.com.ecommerce.persistencia.FabricanteDAO;
 import br.com.ecommerce.persistencia.ProdutoDAO;
+import br.com.ecommerce.util.SessionUtil;
 
 @SessionScoped
 @ManagedBean(name = "produtoCtrl")
@@ -38,7 +39,13 @@ public class ProdutoCtrl {
 	}
 
 	public List<Produto> getListagem() {
-		return new ProdutoDAO().selectAll("nome");
+		try {
+			return new ProdutoDAO().selectAll("nome");
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			Messages.addGlobalError("Erro ao carregar os dados");
+			return null;
+		}
 	}
 
 	public void actionNovo() {
@@ -70,9 +77,9 @@ public class ProdutoCtrl {
 	public void actionExcluir(ActionEvent event) {
 		try {
 			produto = (Produto) event.getComponent().getAttributes().get("produtoSelecionado");
-			
+
 			new ProdutoDAO().delete(produto);
-			
+
 			Messages.addGlobalInfo("Registro excluído com sucesso");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -80,4 +87,9 @@ public class ProdutoCtrl {
 		}
 	}
 
+	public String actionImagens() {
+		SessionUtil.setParam("produto", produto);
+		return "galeria_produto";
+	}
+	
 }
