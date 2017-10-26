@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/admin/template/template.xhtml">
+
+	<ui:define name="conteudo">
+
+		<h:form id="formGaleria">
+
+			<br />
+
+			<div>
+				<p:commandButton icon="fa fa-arrow-left"
+					action="#{imagemProdutoCtrl.actionVoltar}"
+					update=":formGaleria:galeria :formCadastroImagem :formImgAmpliada" />
+
+				<p:commandButton value="Adicionar Imagem"
+					oncomplete="PF('AdcImagemDialog').show();"
+					actionListener="#{imagemProdutoCtrl.actionNovaImagem}"
+					update=":formCadastroImagem" />
+
+			</div>
+
+			<br />
+
+			<p:dataGrid var="img" value="#{imagemProdutoCtrl.imagens}"
+				emptyMessage="Este produto ainda não possui imagens cadastradas"
+				columns="3" layout="grid" id="galeria">
+
+				<f:facet name="header">
+					<h:outputLabel value="#{imagemProdutoCtrl.produto.nome}" />
+				</f:facet>
+
+				<p:panel header="#{img.titulo}" style="text-align:center">
+
+					<h:panelGrid columns="1" style="width:100%">
+						<p:graphicImage value="/temp/#{img.id}.jpg" cache="false"
+							height="170" />
+
+						<p:commandButton icon="fa fa-search"
+							oncomplete="PF('imgAmpliadaDialog').show();"
+							update=":formImgAmpliada:imagem"
+							actionListener="#{imagemProdutoDialogCtrl.actionAmpliarImagem}">
+
+							<f:attribute value="#{img}" name="imagem" />
+
+						</p:commandButton>
+					</h:panelGrid>
+
+				</p:panel>
+
+			</p:dataGrid>
+
+		</h:form>
+
+		<p:dialog widgetVar="AdcImagemDialog" id="AdcImagemDialog"
+			closable="false" draggable="false" resizable="false" modal="true">
+
+			<h:form enctype="multipart/form-data" id="formCadastroImagem">
+
+				<h:panelGrid columns="2">
+
+					<p:outputLabel for="titulo" value="Título" />
+					<p:inputText id="titulo" value="#{imagemProdutoCtrl.tituloImagem}"
+						required="true" maxlength="30" />
+
+				</h:panelGrid>
+
+				<p:fileUpload
+					fileUploadListener="#{imagemProdutoDialogCtrl.actionUploadImagem}"
+					mode="advanced" dragDropSupport="false" sizeLimit="100000000"
+					allowTypes="/(\.|\/)(jpe?g)$/" auto="true" label="Imagem"
+					update=":msgs">
+				</p:fileUpload>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('AdcImagemDialog').hide();" />
+
+					<p:commandButton value="Salvar"
+						actionListener="#{imagemProdutoCtrl.actionSalvarImagem}"
+						oncomplete="PF('AdcImagemDialog').hide();"
+						update="msgs :formGaleria:galeria" />
+				</h:panelGrid>
+			</h:form>
+
+		</p:dialog>
+
+		<p:dialog id="imgAmpliadaDialog" widgetVar="imgAmpliadaDialog"
+			modal="true" responsive="true" showHeader="false" resizable="false"
+			draggable="false" closeOnEscape="true" height="460" width="900"
+			positionType="absolute" position="center center">
+
+			<div align="center">
+				<h:form id="formImgAmpliada">
+					<h:panelGrid columns="1">
+						<p:graphicImage value="#{imagemProdutoDialogCtrl.foto}"
+							id="imagem" height="400" />
+					</h:panelGrid>
+
+					<h:panelGrid columns="2">
+						<p:commandButton icon="fa fa-close"
+							onclick="PF('imgAmpliadaDialog').hide();" />
+
+						<p:commandButton icon="fa fa-trash-o"
+							actionListener="#{imagemProdutoDialogCtrl.actionExcluirImagem}"
+							oncomplete="PF('imgAmpliadaDialog').hide();"
+							update=":msgs :formGaleria:galeria" />
+					</h:panelGrid>
+
+				</h:form>
+			</div>
+
+		</p:dialog>
+
+
+	</ui:define>
+
+</ui:composition>
