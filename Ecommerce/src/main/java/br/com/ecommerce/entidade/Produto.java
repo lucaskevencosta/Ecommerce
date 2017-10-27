@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -33,6 +34,9 @@ public class Produto extends EntidadeGenerica {
 	
 	@OneToMany (mappedBy = "produto", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	private List<ImagemProduto> imagensProduto = new ArrayList<ImagemProduto>();
+	
+	@ManyToMany(mappedBy="produtos", cascade = CascadeType.ALL)
+	private List<Categoria> categorias = new ArrayList<Categoria>();
 
 	public String getNome() {
 		return nome;
@@ -72,6 +76,14 @@ public class Produto extends EntidadeGenerica {
 	
 	public void setImagensProduto(List<ImagemProduto> imagensProduto) {
 		this.imagensProduto = imagensProduto;
+	}
+
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
 	}
 	
 }
