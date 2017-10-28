@@ -43,9 +43,12 @@
         <!-- Mapeamento das entidades -->
         <mapping class="br.com.ecommerce.entidade.Categoria" />
         <mapping class="br.com.ecommerce.entidade.Cidade" />
+        <mapping class="br.com.ecommerce.entidade.Cliente" />
         <mapping class="br.com.ecommerce.entidade.Estado" />
         <mapping class="br.com.ecommerce.entidade.Fabricante" />
+        <mapping class="br.com.ecommerce.entidade.Funcionario" />
         <mapping class="br.com.ecommerce.entidade.ImagemProduto" />
+        <mapping class="br.com.ecommerce.entidade.ListaDeDesejos" />
         <mapping class="br.com.ecommerce.entidade.Pessoa" />
         <mapping class="br.com.ecommerce.entidade.Produto" />
 
