@@ -30,7 +30,13 @@
 					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					style="text-align: left;">
 
-					<p:column headerText="Nome">
+					<p:column headerText="Código" filterBy="#{produto.id}"
+						style="width: 110px; text-align: center;">
+						<p:outputLabel value="#{produto.id}" />
+					</p:column>
+
+					<p:column headerText="Nome" filterBy="#{produto.nome}"
+						style="width: 220px;">
 						<p:outputLabel value="#{produto.nome}" />
 					</p:column>
 
@@ -38,16 +44,12 @@
 						<p:outputLabel value="#{produto.descricao}" />
 					</p:column>
 
-					<p:column headerText="Preço" style="width: 120px;">
-						<p:outputLabel value="R$ #{produto.preco}" />
-					</p:column>
+					<p:column headerText="Categorias" style="width: 80px;">
 
-					<p:column headerText="Fabricante">
-						<p:outputLabel value="#{produto.fabricante.nome}" />
 					</p:column>
 
 					<p:column headerText="Imagens"
-						style="width: 80px;text-align: center;">
+						style="width: 70px;text-align: center;">
 
 						<p:commandButton icon="fa fa-image"
 							action="#{produtoCtrl.actionImagens}" title="Imagens">
@@ -61,6 +63,10 @@
 
 					<p:column headerText="Opções"
 						style="width: 120px;text-align: center;">
+
+						<p:commandButton icon="fa fa-bar-chart-o" title="Relatório">
+
+						</p:commandButton>
 
 						<p:commandButton icon="fa fa-edit"
 							actionListener="#{produtoCtrl.actionPreparaEdição}"
@@ -108,22 +114,29 @@
 						maxlength="30" placeholder="Nome" />
 
 					<p:outputLabel for="descricao" value="Descrição: " />
-					<p:inputText id="descricao"
-						value="#{produtoCtrl.produto.descricao}" maxlength="50"
+					<p:inputTextarea id="descricao"
+						value="#{produtoCtrl.produto.descricao}" maxlength="120"
 						placeholder="Descrição" />
 
-					<p:outputLabel for="preco" value="Preço: " />
-					<p:inputNumber id="preco" value="#{produtoCtrl.produto.preco}"
-						symbol="R$" decimalSeparator="," thousandSeparator="."
-						placeholder="Preço" />
+					<p:outputLabel for="precoCompra" value="Preço de Compra: " />
+					<p:inputNumber id="precoCompra"
+						value="#{produtoCtrl.produto.precoDeCompra}" symbol="R$"
+						decimalSeparator="," thousandSeparator="."
+						placeholder="Preço de Compra" />
 
-					<p:outputLabel for="fabricante" value="Fabricante: " />
-					<p:selectOneMenu id="fabricante"
-						value="#{produtoCtrl.produto.fabricante}"
+					<p:outputLabel for="precoVenda" value="Preço de Venda: " />
+					<p:inputNumber id="precoVenda"
+						value="#{produtoCtrl.produto.precoDeVenda}" symbol="R$"
+						decimalSeparator="," thousandSeparator="."
+						placeholder="Preço de Venda" />
+
+					<p:outputLabel for="fornecedor" value="Fornecedor: " />
+					<p:selectOneMenu id="fornecedor"
+						value="#{produtoCtrl.produto.fornecedor}"
 						converter="omnifaces.SelectItemsConverter">
 						<f:selectItem noSelectionOption="true" itemLabel="Selecionar" />
-						<f:selectItems var="fabricante" value="#{produtoCtrl.fabricantes}"
-							itemLabel="#{fabricante.nome}" itemValue="#{fabricante}" />
+						<f:selectItems var="fornecedor" value="#{produtoCtrl.fornecedores}"
+							itemLabel="#{fornecedor.nome}" itemValue="#{fornecedor}" />
 					</p:selectOneMenu>
 				</h:panelGrid>
 

@@ -57,6 +57,7 @@ public class CategoriaCtrl implements Serializable {
 	public void actionSalvar() {
 		try {
 			categoriaDAO.merge(categoria);
+			Messages.addGlobalInfo("Categoria salva com sucesso");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar os dados");
@@ -73,6 +74,8 @@ public class CategoriaCtrl implements Serializable {
 		
 		try {
 			categoriaDAO.delete(categoria);
+			
+			Messages.addGlobalInfo("Os dados foram excluídos com sucesso");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Messages.addGlobalError("Ocorreu um erro ao tentar excluir os dados");

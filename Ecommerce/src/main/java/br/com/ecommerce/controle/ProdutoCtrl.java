@@ -8,9 +8,9 @@ import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
-import br.com.ecommerce.entidade.Fabricante;
+import br.com.ecommerce.entidade.Fornecedor;
 import br.com.ecommerce.entidade.Produto;
-import br.com.ecommerce.persistencia.FabricanteDAO;
+import br.com.ecommerce.persistencia.FornecedorDAO;
 import br.com.ecommerce.persistencia.ProdutoDAO;
 import br.com.ecommerce.util.SessionUtil;
 
@@ -20,7 +20,7 @@ public class ProdutoCtrl {
 
 	private Produto produto;
 
-	private List<Fabricante> fabricantes = new FabricanteDAO().selectAll("nome");
+	private List<Fornecedor> fornecedores = new FornecedorDAO().selectAll("nome");
 
 	public Produto getProduto() {
 		return produto;
@@ -30,12 +30,12 @@ public class ProdutoCtrl {
 		this.produto = produto;
 	}
 
-	public List<Fabricante> getFabricantes() {
-		return fabricantes;
+	public List<Fornecedor> getFornecedores() {
+		return fornecedores;
 	}
-
-	public void setFabricantes(List<Fabricante> fabricantes) {
-		this.fabricantes = fabricantes;
+	
+	public void setFornecedores(List<Fornecedor> fornecedores) {
+		this.fornecedores = fornecedores;
 	}
 
 	public List<Produto> getListagem() {
@@ -52,7 +52,7 @@ public class ProdutoCtrl {
 		try {
 			produto = new Produto();
 
-			fabricantes = new FabricanteDAO().selectAll("nome");
+			fornecedores = new FornecedorDAO().selectAll("nome");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Messages.addGlobalError("Erro ao carregar alguns dados");

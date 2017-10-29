@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/admin/template/template.xhtml">
+
+	<ui:define name="conteudo">
+
+		<br />
+		<h:form id="formListFornecedores">
+
+			<p:panel header="Listagem de Fornecedores"
+				style="text-align: center;">
+
+				<div align="left">
+					<p:commandButton value="Novo"
+						actionListener="#{fornecedorCtrl.actionNovo}"
+						oncomplete="PF('cadFornecedorDialog').show();"
+						update=":formCadFornecedor" />
+				</div>
+
+				<br />
+				<p:dataTable id="tabela" var="fornecedor"
+					value="#{fornecedorCtrl.fornecedores}"
+					emptyMessage="Não há dados cadastrados" paginator="true"
+					paginatorPosition="bottom" rows="10" rowsPerPageTemplate="10,15,20"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					style="text-align: left;">
+
+					<p:column headerText="Nome:">
+						<p:outputLabel value="#{fornecedor.nome}" />
+					</p:column>
+
+					<p:column headerText="Observações">
+						<p:outputLabel value="#{fornecedor.observacoes}" />
+					</p:column>
+
+					<p:column headerText="Opções"
+						style="width: 120px;text-align: center;">
+
+						<p:commandButton icon="fa fa-edit" title="Editar"
+							actionListener="#{fornecedorCtrl.actionEditar}"
+							update=":formCadFornecedor"
+							oncomplete="PF('cadFornecedorDialog').show();">
+
+							<f:attribute name="fornecedor" value="#{fornecedor}" />
+
+						</p:commandButton>
+
+						<p:commandButton icon="fa fa-trash-o" title="Excluir"
+							actionListener="#{fornecedorCtrl.actionExcluir}"
+							update=":formListFornecedores:tabela">
+
+							<p:confirm header="Confirmação"
+								message="Este registro será excluído permanentemente. Deseja Continuar?"
+								icon="ui-icon-alert" />
+
+							<f:attribute name="fornecedor" value="#{fornecedor}" />
+
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+				
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+
+			</p:panel>
+		</h:form>
+
+		<p:dialog widgetVar="cadFornecedorDialog" id="cadFornecedorDialog"
+			resizable="false" draggable="false" closable="false" modal="true"
+			closeOnEscape="true">
+
+			<h:form id="formCadFornecedor">
+				<h:panelGrid columns="2">
+					<p:outputLabel for="nome" value="Nome" />
+					<p:inputText id="nome" value="#{fornecedorCtrl.fornecedor.nome}"
+						maxlength="30" required="true" />
+
+					<p:outputLabel for="obs" value="Observações" />
+					<p:inputTextarea id="obs"
+						value="#{fornecedorCtrl.fornecedor.observacoes}" maxlength="120" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Cancelar"
+						onclick="PF('cadFornecedorDialog').hide();" />
+
+					<p:commandButton value="Salvar"
+						actionListener="#{fornecedorCtrl.actionSalvar}"
+						oncomplete="PF('cadFornecedorDialog').hide();"
+						update=":formListFornecedores:tabela :msgs" />
+				</h:panelGrid>
+			</h:form>
+
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>

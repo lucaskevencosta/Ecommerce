@@ -22,15 +22,18 @@ public class Produto extends EntidadeGenerica {
 	@Column (nullable = false, length = 30)
 	private String nome;
 	
-	@Column (nullable = false, length = 50)
+	@Column (nullable = false, length = 120)
 	private String descricao;
 	
 	@Column (nullable = false, precision = 7, scale = 2)
-	private BigDecimal preco;
+	private BigDecimal precoDeCompra;
+	
+	@Column (nullable = false, precision = 7, scale = 2)
+	private BigDecimal precoDeVenda;
 	
 	@ManyToOne
 	@JoinColumn (nullable = false)
-	private Fabricante fabricante;
+	private Fornecedor fornecedor;
 	
 	@OneToMany (mappedBy = "produto", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	private List<ImagemProduto> imagensProduto = new ArrayList<ImagemProduto>();
@@ -54,20 +57,28 @@ public class Produto extends EntidadeGenerica {
 		this.descricao = descricao;
 	}
 	
-	public BigDecimal getPreco() {
-		return preco;
+	public BigDecimal getPrecoDeCompra() {
+		return precoDeCompra;
 	}
 	
-	public void setPreco(BigDecimal preco) {
-		this.preco = preco;
+	public void setPrecoDeCompra(BigDecimal precoDeCompra) {
+		this.precoDeCompra = precoDeCompra;
 	}
 	
-	public Fabricante getFabricante() {
-		return fabricante;
+	public BigDecimal getPrecoDeVenda() {
+		return precoDeVenda;
+	}
+	
+	public void setPrecoDeVenda(BigDecimal precoDeVenda) {
+		this.precoDeVenda = precoDeVenda;
+	}
+	
+	public Fornecedor getFornecedor() {
+		return fornecedor;
 	}
 
-	public void setFabricante(Fabricante fabricante) {
-		this.fabricante = fabricante;
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
 	}
 	
 	public List<ImagemProduto> getImagensProduto() {
