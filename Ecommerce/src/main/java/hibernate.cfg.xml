@@ -9,11 +9,11 @@
     <session-factory>
 
         <!-- Configurações de Conexão com o Banco de Dados -->
-       <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <!-- <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="connection.url">jdbc:mysql://127.0.0.1:3306/bd_ecommerce</property>
         <property name="connection.username">root</property>
-        <property name="connection.password">123456</property>
-         <!-- <property name="connection.datasource">java:/comp/env/jdbc/hibernatedb</property> -->
+        <property name="connection.password">123456</property> -->
+        <property name="connection.datasource">java:/comp/env/jdbc/hibernatedb</property>
 
     	<!-- SQL dialect -->
         <property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>

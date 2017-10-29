@@ -44,12 +44,13 @@
 							actionListener="#{fabricanteCtrl.actionPrepararEdicao}"
 							icon="fa fa-edit" oncomplete="PF('cadFabricanteDialog').show();"
 							update=":formDialogCadFabricante :msgs">
-							<f:attribute name="fabricante" value="#{fabricante}" />
+							<f:attribute name="fabricante" value="#{fabricante}"
+								title="Editar" />
 						</p:commandButton>
 
 						<p:commandButton icon="fa fa-trash-o"
 							actionListener="#{fabricanteCtrl.actionExcluir}"
-							update="tabelaFabricantes :msgs">
+							update="tabelaFabricantes :msgs" title="Excluir">
 							<p:confirm header="Confirmação"
 								message="Este registro será excluído permanentemente. Deseja Continuar?"
 								icon="ui-icon-alert" />

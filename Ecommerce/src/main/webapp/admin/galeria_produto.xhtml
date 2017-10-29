@@ -105,12 +105,12 @@
 
 					<h:panelGrid columns="2">
 						<p:commandButton icon="fa fa-close"
-							onclick="PF('imgAmpliadaDialog').hide();" />
+							onclick="PF('imgAmpliadaDialog').hide();" title="Fechar" />
 
 						<p:commandButton icon="fa fa-trash-o"
 							actionListener="#{imagemProdutoDialogCtrl.actionExcluirImagem}"
 							oncomplete="PF('imgAmpliadaDialog').hide();"
-							update=":msgs :formGaleria:galeria" />
+							update=":msgs :formGaleria:galeria" title="Excluir" />
 					</h:panelGrid>
 
 				</h:form>

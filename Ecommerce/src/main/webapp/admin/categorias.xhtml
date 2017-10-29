@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/admin/template/template.xhtml">
+
+	<ui:define name="conteudo">
+
+		<br />
+		<h:form id="formTableCategoria">
+			<div align="center">
+				<p:panel header="Listagem de Categorias"
+					style="text-align: center; width: 60%;">
+					<div align="left">
+						<p:commandButton value="Novo"
+							oncomplete="PF('CadCategoriaDialog').show();"
+							actionListener="#{categoriaCtrl.novaCategoria}"
+							update=":formCadCategoria" />
+					</div>
+
+					<br />
+					<p:dataTable var="categoria" value="#{categoriaCtrl.listagem}"
+						emptyMessage="Não há dados cadastrados" paginator="true"
+						paginatorPosition="bottom" rows="10"
+						rowsPerPageTemplate="10,15,20"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						style="text-align: left;" id="tabela">
+
+						<p:column headerText="Nome">
+							<p:outputLabel value="#{categoria.nome}" />
+						</p:column>
+
+						<p:column headerText="Opções"
+							style="width: 120px;text-align:center;">
+
+							<p:commandButton icon="fa fa-edit" title="Editar"
+								update=":formCadCategoria"
+								actionListener="#{categoriaCtrl.actionEditar}"
+								oncomplete="PF('CadCategoriaDialog').show();">
+
+								<f:attribute name="categoriaSelecionada" value="#{categoria}" />
+
+							</p:commandButton>
+
+							<p:commandButton icon="fa fa-trash-o" title="Excluir"
+								actionListener="#{categoriaCtrl.actionExcluir}"
+								update=":formTableCategoria:tabela">
+
+								<f:attribute name="categoriaSelecionada" value="#{categoria}" />
+
+								<p:confirm header="Confirmação"
+									message="Este registro será excluído permanentemente. Deseja Continuar?"
+									icon="ui-icon-alert" />
+
+							</p:commandButton>
+
+						</p:column>
+
+					</p:dataTable>
+
+					<p:confirmDialog global="true">
+						<p:commandButton value="Sim" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Não" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+
+				</p:panel>
+			</div>
+
+		</h:form>
+
+		<p:dialog widgetVar="CadCategoriaDialog" id="CadCategoriaDialog"
+			closable="false" resizable="false" draggable="false" modal="true">
+
+			<h:form id="formCadCategoria">
+				<h:panelGrid columns="2">
+					<p:outputLabel for="nome" value="Nome: " />
+					<p:inputText id="nome" value="#{categoriaCtrl.categoria.nome}" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('CadCategoriaDialog').hide();" />
+
+					<p:commandButton value="Salvar"
+						actionListener="#{categoriaCtrl.actionSalvar}"
+						oncomplete="PF('CadCategoriaDialog').hide();"
+						update=":formTableCategoria:tabela :formCadCategoria" />
+				</h:panelGrid>
+			</h:form>
+
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>

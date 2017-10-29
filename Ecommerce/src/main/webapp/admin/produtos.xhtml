@@ -50,7 +50,7 @@
 						style="width: 80px;text-align: center;">
 
 						<p:commandButton icon="fa fa-image"
-							action="#{produtoCtrl.actionImagens}">
+							action="#{produtoCtrl.actionImagens}" title="Imagens">
 
 							<f:setPropertyActionListener value="#{produto}"
 								target="#{produtoCtrl.produto}" />
@@ -65,7 +65,7 @@
 						<p:commandButton icon="fa fa-edit"
 							actionListener="#{produtoCtrl.actionPreparaEdição}"
 							oncomplete="PF('cadProdDialog').show();"
-							update=":msgs :formCadProduto:cadProduto">
+							update=":msgs :formCadProduto:cadProduto" title="Editar">
 
 							<f:attribute value="#{produto}" name="produtoSelecionado" />
 
@@ -73,7 +73,8 @@
 
 						<p:commandButton icon="fa fa-trash-o"
 							actionListener="#{produtoCtrl.actionExcluir}"
-							update=":msgs :formaProdutoListagem:tabelaProdutos">
+							update=":msgs :formaProdutoListagem:tabelaProdutos"
+							title="Excluir">
 
 							<p:confirm header="Confirmação"
 								message="Este registro será excluído permanentemente. Deseja Continuar?"

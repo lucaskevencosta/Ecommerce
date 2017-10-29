@@ -45,16 +45,20 @@
 						<p:commandButton
 							actionListener="#{pessoaCtrl.actionPrepararEdicao}"
 							icon="fa fa-edit" update=":formCadUsuario:painelCadUsuario :msgs"
-							oncomplete="PF('CadUsuarioDialog').show();">
+							oncomplete="PF('CadUsuarioDialog').show();" title="Editar">
+							
 							<f:attribute name="usuarioTabela" value="#{user}" />
+							
 						</p:commandButton>
 
 						<p:commandButton actionListener="#{pessoaCtrl.actionExcluir}"
-							icon="fa fa-trash-o" update="tabelaUsuarios :msgs">
+							icon="fa fa-trash-o" update="tabelaUsuarios :msgs" title="Excluir">
 							<p:confirm header="Confirmação"
 								message="Este registro será excluído permanentemente. Deseja Continuar?"
 								icon="ui-icon-alert" />
+								
 							<f:attribute name="usuarioTabela" value="#{user}" />
+							
 						</p:commandButton>
 					</p:column>
 
